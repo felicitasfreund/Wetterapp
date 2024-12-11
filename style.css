@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('tag-mit-wolken-design-der-mobilen-benutzeroberflaeche-des-wetter-app-bildschirms-vorhersage-des-wetterhintergrunds-vektorbanner-fuer-das-zeitkonzept_87946-4137.avif');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 20px;
+}
+
+.app-main {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: #3498db;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.weather-body {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}
+
+.weather-body h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.weather-body img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.weather-body .location-details,
+.weather-body .weather-status {
+    margin-bottom: 15px;
+}
+
+.weather-body .location-details p,
+.weather-body .weather-status p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.error-message {
+    background-color: #e74c3c;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .app-main {
+        width: 90%;
+        padding: 15px;
+    }
+
+    button {
+        padding: 10px;
+    }
+
+    .weather-body {
+        padding: 15px;
+    }
+}

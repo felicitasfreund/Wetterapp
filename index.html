@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <link rel="stylesheet" href="style.css"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wetterabfrage</title>
+</head>
+<body>
+    <div class="app-main">
+        <h1>Wetterabfrage</h1>
+        <div class="form-group">
+            <label for="city-input">Stadt eingeben</label>
+            <input type="text" class="input-box" id="city-input" placeholder="Stadt eingeben">
+        </div>
+        <button onclick="fetchWeather()">Wetter abrufen</button>
+        
+        <div id="weather-output" class="weather-body" style="display: none;"></div>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </div>
+
+    <script>
+        function fetchWeather() {
+            const city = document.getElementById('city-input').value.trim();
+            if (!city) {
+                document.getElementById('error-message').innerHTML = 'Bitte gib eine Stadt ein!';
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('error-message').style.display = 'none';
+
+            const apiKey = 'bab281d79e5f1e9755a68d754cc313e7'; 
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=de`;
+
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Stadt nicht gefunden!');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayWeather(data);
+                    updateBackground(data);
+                })
+                .catch(error => {
+                    document.getElementById('error-message').innerHTML = error.message;
+                    document.getElementById('error-message').style.display = 'block';
+                });
+        }
+
+        function displayWeather(data) {
+            const weatherOutput = document.getElementById('weather-output');
+            const weatherIcon = data.weather[0].icon;
+            const iconUrl = `https://openweathermap.org/img/wn/${weatherIcon}.png`;
+
+            weatherOutput.innerHTML = `
+                <h2>Wetter in ${data.name}</h2>
+                <img src="${iconUrl}" alt="${data.weather[0].description}">
+                <div class="location-details">
+                    <p>Temperatur: ${data.main.temp} °C</p>
+                    <p>Minimale Temperatur: ${data.main.temp_min} °C</p>
+                    <p>Maximale Temperatur: ${data.main.temp_max} °C</p>
+                </div>
+                <div class="weather-status">
+                    <p>Beschreibung: ${data.weather[0].description}</p>
+                    <p>Windstärke: ${data.wind.speed} m/s</p>
+                    <p>Luftdruck: ${data.main.pressure} hPa</p>
+                    <p>Feuchtigkeit: ${data.main.humidity} %</p>
+                </div>
+            `;
+            weatherOutput.style.display = 'block';
+        }
+
+        function updateBackground(data) {
+            const weatherMain = data.weather[0].main.toLowerCase();
+            const body = document.body;
+
+            if (weatherMain.includes('clear')) {
+                body.style.backgroundImage = "url('sunny.jpg')";
+            } else if (weatherMain.includes('clouds')) {
+                body.style.backgroundImage = "url('cloudy.jpg')";
+            } else if (weatherMain.includes('rain')) {
+                body.style.backgroundImage = "url('rainy.jpg')";
+            } else if (weatherMain.includes('snow')) {
+                body.style.backgroundImage = "url('snowy.jpg')";
+            } else {
+                body.style.backgroundImage = "url('default.jpg')";
+            }
+
+            body.style.backgroundSize = 'cover';
+            body.style.backgroundRepeat = 'no-repeat';
+            body.style.backgroundPosition = 'center';
+        }
+    </script>
+</body>
+</html>
